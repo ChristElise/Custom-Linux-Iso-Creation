@@ -59,8 +59,23 @@ variant-light
 ```
 As we can see we have a **package-list** folder which contains the **kali.list.chroot** file. This file contains packages that are installed by default in the Kali Linux ISO and can be modified to include any tool that can be installed with ***apt install \<package name\>***
 
-### 3. Getting Our Hands Dirty
-We have talked a lot of theory now it's time to use our understanding to create our custom Kali Linux Image which will be ready to use out of the box for the intended purpose. :wave
+### 3. Getting Our Hands Dirty :yum:
+We have talked a lot of theory now it's time to use our understanding to create our custom Kali Linux Image which will be ready to use out of the box for the intended purpose. This will be broken down into various steps. *NB: These steps are followed after installing dependencies and cloning the **live-build-config** from GitLab*
+#### Step 1: Make our Kali Install on its own
+Tired of playing the endless game of "Enter, Yes, Enter, Enter, Yes" every time you install Kali Linux? Or maybe you'd rather kick off the installation and hit the sack, instead of risking a caffeine-fueled disaster by turning your keyboard into a coffee sponge while you mash the Enter key like it's your job? Well, here we will study how to automate your installation process using preseeding scripts for unattended installation that does all the hard work for you.
+We first will need to add a customised syslinux boot entry which includes a boot parameter for a custom preseed file. In this way when installing Kali Linux we will have the option either to completely automate the installation process using our custom preseed script or do it manually. 
+```bash
+kali@pentester:~/live-build-config$ cat <<EOF > kali-config/common/includes.binary/isolinux/install.cfg
+label install
+    menu label ^Install Automated
+    linux /install/vmlinuz
+    initrd /install/initrd.gz
+    append vga=788 -- quiet file=/cdrom/install/preseed.cfg locale=en_US keymap=us hostname=kali domain=local.lan
+EOF
+```
+Next, we place our custom preseed script in the **live-build-config/kali-config/includes.installer** directory with the name *preseed.cfg*. Thanks to the Kali development team as a beginner you will not have to write a complete preseed script because it has been made for you already and can be downloaded using the link [Premade Preseed scripts](https://gitlab.com/kalilinux/recipes/kali-preseed-examples/).
+In this workshop, we will use the [Kali Linux Full Unattended](https://gitlab.com/kalilinux/recipes/kali-preseed-examples/-/raw/master/kali-linux-full-unattended.preseed). This preseed files will install a Kali Linux "Full" installation with no questions asked (unattended). 
+
 
 
 
