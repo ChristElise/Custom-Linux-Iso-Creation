@@ -89,20 +89,21 @@ Don't forget that this is your custom Kali Linux image so of course there are so
 $filepath = "~/live-build-config/kali-config/includes.installer/preseed.cfg"
 
 # Changing our location from US to Britain an changing the language to English
-sed -i  's/d-i debian-installer\/locale string en_US/d-i debian-installer\/locale string en_GB\nd-i debian-installer\/language string en/' preseed.cfg $filepath
+sed -i  's/d-i debian-installer\/locale string en_US/d-i debian-installer\/locale string en_GB\nd-i debian-installer\/language string en/' $filepath
 # Changing country to British
 sed -i  's/d-i mirror\/country string enter information manually/d-i mirror\/country string GB/' $filepath
 #Changing time zone
 sed -i  's/d-i time\/zone string US\/Eastern/d-i time\/zone string Europe\/London/' $filepath
 #Chaning host information
 sed -i  's/d-i netcfg\/get_hostname string unassigned-hostname/d-i netcfg\/get_domain string kali.local/' $filepath
-sed -i  's/d-i passwd/make-user boolean false/d-i passwd\/make-user boolean true/' $filepath
-sed -i '44a\d-i passwd/user-fullname string pentester' $filepath
-sed -i '45a\d-i passwd/username string pentester' $filepath
-sed -i "46a\d-i passwd/user-password-crypted password $(mkpasswd -m sha-512 pentester)" $filepath
+sed -i  's/d-i passwd\/make-user boolean false/d-i passwd\/make-user boolean true/' $filepath
+sed -i '44a\d-i passwd\/user-fullname string pentester' $filepath
+sed -i '45a\d-i passwd\/username string pentester' $filepath
+sed -i "46a\d-i passwd\/user-password-crypted password $(mkpasswd -m sha-512 pentester)" $filepath
+sed -i  '47a/d-i passwd\/root-login boolean false/' $filepath
 sed -i  's/#d-i passwd\/root-password password toor/d-i passwd\/root-password password toor/' $filepath
 sed -i  's/#d-i passwd\/root-password-again password toor/d-i passwd\/root-password-again password toor/' $filepath
-sed -i  's/#d-i passwd\/root-login boolean false/d-i passwd/root-login boolean false/' $filepath
+
 
 #There are many more to customize. Remember this is your Kali ISO so try to play around with this file. 
 ```
