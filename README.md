@@ -79,7 +79,7 @@ Next, we place our custom preseed script in the **live-build-config/kali-config/
 In this workshop, we will use the [Kali Linux Full Unattended](https://gitlab.com/kalilinux/recipes/kali-preseed-examples/-/raw/master/kali-linux-full-unattended.preseed). The first comment in this file mentions that "This preseed files will install a Kali Linux "Full" installation with no questions asked (unattended)", this sounds great but to have a complete installation we will have to modify some lines. I will not go deeper into the syntax of preseed scripts but for more information, you can reference this link [Automating the installation using preseeding](https://www.debian.org/releases/bookworm/amd64/apb.en.html).
 
 ```bash
-kali@pentester:~/live-build-config$ wget https://gitlab.com/kalilinux/recipes/kali-preseed-examples/-/raw/master/kali-linux-full-unattended.preseed -O kali-config/includes.installer/preseed.cfg
+kali@pentester:~/live-build-config$ wget https://gitlab.com/kalilinux/recipes/kali-preseed-examples/-/raw/master/kali-linux-full-unattended.preseed -O kali-config/common/includes.installer/preseed.cfg
 ```
 Don't forget that this is your custom Kali Linux image so of course there are some fills in the automation process you would like to control/modify such as language, username, password, etc for this you need to edit some entries in the preseed.cfg script you just downloaded above. Some basic modifications can be done using the bash script below.
 
