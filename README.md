@@ -74,7 +74,7 @@ label install
 EOF
 ```
 Next, we place our custom preseed script in the **live-build-config/kali-config/includes.installer** directory with the name *preseed.cfg*. Thanks to the Kali development team as a beginner you will not have to write a complete preseed script because it has been made for you already and can be downloaded using the link [Premade Preseed scripts](https://gitlab.com/kalilinux/recipes/kali-preseed-examples/).
-In this workshop, we will use the [Kali Linux Full Unattended](https://gitlab.com/kalilinux/recipes/kali-preseed-examples/-/raw/master/kali-linux-full-unattended.preseed). This preseed files will install a Kali Linux "Full" installation with no questions asked (unattended). 
+In this workshop, we will use the [Kali Linux Full Unattended](https://gitlab.com/kalilinux/recipes/kali-preseed-examples/-/raw/master/kali-linux-full-unattended.preseed). The first comment in this file mentions that "This preseed files will install a Kali Linux "Full" installation with no questions asked (unattended)", this sounds great but to have a complete installation we will have to modify some lines. I will not go deeper into the syntax of preseed scripts but for more information, you can reference this link [Automating the installation using preseeding](https://www.debian.org/releases/bookworm/amd64/apb.en.html).
 
 
 
