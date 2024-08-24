@@ -83,7 +83,7 @@ Don't forget that this is your custom Kali Linux image so of course there are so
 
 ```bash
 #filename = customize.sh
-/bin/bash
+#/bin/bash
 
 #Storing the path of the preseed.cfg file in a variable to facilitate manipulation
 $filepath = "~/live-build-config/kali-config/includes.installer/preseed.cfg"
@@ -103,6 +103,8 @@ sed -i "46a\d-i passwd/user-password-crypted password $(mkpasswd -m sha-512 pent
 sed -i  's/#d-i passwd\/root-password password toor/d-i passwd\/root-password password toor/' $filepath
 sed -i  's/#d-i passwd\/root-password-again password toor/d-i passwd\/root-password-again password toor/' $filepath
 sed -i  's/#d-i passwd\/root-login boolean false/d-i passwd/root-login boolean false/' $filepath
+
+#There are many more to customize. Remember this is your Kali ISO so try to play around with this file. 
 ```
 ```bash
 kali@pentester:~/live-build-config$ chmod 755 ./customize.sh
