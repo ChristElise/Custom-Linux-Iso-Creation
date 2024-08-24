@@ -88,7 +88,7 @@ Don't forget that this is your custom Kali Linux image so of course there are so
 #!/bin/bash
 
 #Storing the path of the preseed.cfg file in a variable to facilitate manipulation
-$filepath = "~/live-build-config/kali-config/common/includes.installer/preseed.cfg"
+filepath = "~/live-build-config/kali-config/common/includes.installer/preseed.cfg"
 
 # Changing our location from US to Britain an changing the language to English
 sed -i  's/d-i debian-installer\/locale string en_US/d-i debian-installer\/locale string en_GB\nd-i debian-installer\/language string en/' $filepath
