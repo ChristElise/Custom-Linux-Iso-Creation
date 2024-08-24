@@ -130,7 +130,7 @@ kali@pentester:~/live-build-config$ mv sample-image.png kali-config/common/inclu
 We can now create hook scripts that will run at various stages of the build. Here we will create a hook script that will install additional python3 packages during the creation of the Kali Linux ISO file. For more information about hooks and how they can be used check this link [Hooks](https://live-team.pages.debian.net/live-manual/html/live-manual/customizing-contents.en.html#507)
 
 ```bash
-kali@pentester:~/live-build-config$ echo "#!/bin/bash" > kali-config/hooks/live/99-install-python-packages.hook.chroot 
+kali@pentester:~/live-build-config$ echo '#!/bin/bash' > kali-config/common/hooks/live/99-install-python-packages.hook.chroot 
 kali@pentester:~/live-build-config$ echo "pip3 install uploadserver" >> kali-config/common/hooks/live/99-install-python-packages.hook.chroot 
 kali@pentester:~/live-build-config$ chmod 755 kali-config/common/hooks/live/99-install-python-packages.hook.chroot 
 ```
