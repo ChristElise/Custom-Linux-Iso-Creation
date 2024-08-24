@@ -143,7 +143,8 @@ kali@pentester:~/live-build-config$ echo "kali-linux-default\nkali-tools-top10\n
 
 #### Step 4: Building our Kali ISO Image
 After customizing our desired build to fit our taste we can now run the **build.sh** script found in the **live-build-config** directory providing arguments for it to build an ISO image for the Kali built we have customized in our case **kali-config/variant-light**
-``bash
+
+```bash
 kali@pentester:~/live-build-config$ ./build.sh --variant light --verbose --arch amd64  --distribution kali-rolling
 
 RUNNING: lb clean --purge
@@ -163,7 +164,7 @@ GENERATED KALI IMAGE: ./images/kali-linux-rolling-live-light-amd64.iso
             
 kali@pentester:~/live-build-config$ ls images           
 kali-linux-rolling-live-light-amd64.log   kali-linux-rolling-live-light-amd64.iso
-``
+```
 #### Step 5: Install Your Custom Kali 
 The last step for you is to install your custom Kali Linux ISO and start playing some HackTheBox or TryHackMe boxes
 
