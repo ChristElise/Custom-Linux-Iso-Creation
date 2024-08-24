@@ -22,37 +22,54 @@ kali@pentester:~$ cd live-build-config
 kali@pentester:~/live-build-config$ ls
 auto  build_all.sh  build.sh  kali-config  README.md  simple-cdd
 ```
-Here, we can see three files and three folders but the most important for us is the **build.sh** bash script which helps us to build our Kali Linux ISO from scratch and the **kali-config** which contains templates for carious KALI build flavor.
+Here, we can see three files and three folders but the most important for us is the **build.sh** bash script used to build our Kali Linux ISO from scratch and the **kali-config** which contains templates for carious KALI build flavor.
 
-### 2. KALI ISO Customization
+### 2. Understanding the Directory Structure of the Repository
+
 This is where our journey begins because in this stage we will start customizing different components in our KALI Linux. To carry out this customization, we first need to understand the folder structure in the **kali-config** folder. Let's discover the content of this interesting folder.
 ```bash
-kali@pentester:~/live-build-config/kali-config$ ls -l
-total 64
-drwxrwxr-x 9 pentester pentester 4096 Aug 31 7:00 common
-drwxrwxr-x 2 pentester pentester 4096 Aug 31 7:00 installer-default
-drwxrwxr-x 2 pentester pentester 4096 Aug 31 7:00 installer-everything
-drwxrwxr-x 2 pentester pentester 4096 Aug 31 7:00 installer-netinst
-drwxrwxr-x 2 pentester pentester 4096 Aug 31 7:00 installer-purple
-lrwxrwxrwx 1 pentester pentester   12 Aug 31 7:00 variant-default -> variant-xfce
-drwxrwxr-x 5 pentester pentester 4096 Aug 31 7:00 variant-e17
-drwxrwxr-x 3 pentester pentester 4096 Aug 31 7:00 variant-everything
-drwxrwxr-x 3 pentester pentester 4096 Aug 31 7:00 variant-gnome
-drwxrwxr-x 4 pentester pentester 4096 Aug 31 7:00 variant-i3
-drwxrwxr-x 3 pentester pentester 4096 Aug 31 7:00 variant-kde
-drwxrwxr-x 3 pentester pentester 4096 Aug 31 7:00 variant-large
-drwxrwxr-x 3 pentester pentester 4096 Aug 31 7:00 variant-light
-drwxrwxr-x 3 pentester pentester 4096 Aug 31 7:00 variant-lxde
-drwxrwxr-x 3 pentester pentester 4096 Aug 31 7:00 variant-mate
-drwxrwxr-x 2 pentester pentester 4096 Aug 31 7:00 variant-minimal
-drwxrwxr-x 4 pentester pentester 4096 Aug 31 7:00 variant-xfce
+kali@pentester:~/live-build-config/kali-config$ ls 
+common             installer-everything  installer-purple  variant-e17         variant-gnome  variant-kde    variant-light  variant-mate     variant-xfce
+installer-default  installer-netinst     variant-default   variant-everything  variant-i3     variant-large  variant-lxde   variant-minimal
 ```
 Here we can distinguish three folder naming formats i.e. *variant-xxxx*, *installer-xxxx*, and *common*. Let's break this down.
 
-**common**: This folder contains the files common in all types of Kali Linux images.<br>
-**installer-xx**: These folders contain configuration files to build the Kali Linux installer image.<br>
-**variant-xx**: These folders contain configuration files to build the Kali Linux live image.<br>
-**NB**: *For most of them "xx" represents the desktop environment used when building the ISO (e.g. gnome, xfce, i3, etc), while for others it represents the packages that will be included in the image file.*
+• **common**: This folder contains the files common in all Kali Linux images.<br>
+• **installer-xx**: These folders contain configuration files to build the Kali Linux installer image.<br>
+• **variant-xx**: These folders contain configuration files to build the Kali Linux live image.
+
+**NB**: *For most of them "xx" represents the desktop environment used when building the ISO (e.g. gnome, xfce, i3, etc), and for others it represents the packages that will be included in the image file (we will talk about these packages below).*
+
+**a)** First let's understand the components of the  **common** directory and how it can help us to customize our Kali Linux image. This directory contains the following folders.
+```bash
+kali@pentester:~/live-build-config/kali-config/common$ ls
+bootloaders  hooks  includes.binary  includes.chroot  includes.installer  package-lists  preseed
+```
+These folders contain different scripts used in the building process of the Kali Linux image. For this workshop, we will touch the **hooks**, **includes.chroot**, and **includes.installer** folders. These folders have the following functions.<br>
+• **hooks**: This folder contains bash script hooks. Bash hook scripts are special scripts that are executed at a predefined point in a process to customize or extend its behavior. Here the will be executed at specific points during the build process. These hooks allow you to customize and extend the build process according to your requirements.<br>
+• **includes.chroot**: This folder represents the overlaying of files in the Linux root directory (/). Custom files we may want to integrate with our Kali Linux ISO can be placed here.<br>
+• **includes.installer**: This folder is used to configure automated installations using preseeding. Preseeding is a method used in Debian-based systems (including Kali Linux) to automate the installation process by pre-configuring the installer with answers to the prompts normally asked during installation.<br>
+
+**b)** Next, depending on which image we want (live or installer), which desktop environment, or which packages we want preinstalled we can choose any of the folders having as the naming format **installer-xx** and **variant-xx**. In this workshop, we will choose the **variant-light** because by default it is the lightest installation (*NB: Depending on the additional packages I add it can also become the heaviest*). Let's study the directory structure and how it can help us to customize our Kali Linux image. The directory structure here is very simple and it applies to almost all the other folders.
+```bash
+kali@pentester:~/live-build-config/kali-config$ tree variant-light 
+variant-light
+└── package-lists
+    └── kali.list.chroot
+```
+As we can see we have a **package-list** folder which contains the **kali.list.chroot** file. This file contains packages that are installed by default in the Kali Linux ISO and can be modified to include any tool that can be installed with ***apt install \<package name\>***
+
+### 3. Getting Our Hands Dirty
+We have talked a lot of theory now it's time to use our understanding to create our custom Kali Linux Image which will be ready to use out of the box for the intended purpose. :wave
+
+
+
+
+
+
+
+
+
 
 
 
