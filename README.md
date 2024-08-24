@@ -61,7 +61,8 @@ As we can see we have a **package-list** folder which contains the **kali.list.c
 
 ### 3. Getting Our Hands Dirty :yum:
 We have talked a lot of theory now it's time to use our understanding to create our custom Kali Linux Image which will be ready to use out of the box for the intended purpose. This will be broken down into various steps. *NB: These steps are followed after installing dependencies and cloning the **live-build-config** from GitLab*
-#### Step 1: Make our Kali Install on its own
+
+#### Step 1: Make Kali Install on its own
 Tired of playing the endless game of "Enter, Yes, Enter, Enter, Yes" every time you install Kali Linux? Or maybe you'd rather kick off the installation and hit the sack, instead of risking a caffeine-fueled disaster by turning your keyboard into a coffee sponge while you mash the Enter key like it's your job? Well, here we will study how to automate your installation process using preseeding scripts for unattended installation that does all the hard work for you.
 We first will need to add a customised syslinux boot entry which includes a boot parameter for a custom preseed file. In this way when installing Kali Linux we will have the option either to completely automate the installation process using our custom preseed script or do it manually. 
 ```bash
@@ -72,21 +73,22 @@ label install
     initrd /install/initrd.gz
     append vga=788 -- quiet file=/cdrom/install/preseed.cfg locale=en_US keymap=us hostname=kali domain=local.lan
 EOF
+kali@pentester:~/live-build-config$ chmod 755 kali-config/common/includes.binary/isolinux/install.cfg
 ```
-Next, we place our custom preseed script in the **live-build-config/kali-config/includes.installer** directory with the name *preseed.cfg*. Thanks to the Kali development team as a beginner you will not have to write a complete preseed script because it has been made for you already and can be downloaded using the link [Premade Preseed scripts](https://gitlab.com/kalilinux/recipes/kali-preseed-examples/).
+Next, we place our custom preseed script in the **live-build-config/kali-config/common/includes.installer** directory with the name *preseed.cfg*. Thanks to the Kali development team as a beginner you will not have to write a complete preseed script because it has been made for you already and can be downloaded using the link [Premade Preseed scripts](https://gitlab.com/kalilinux/recipes/kali-preseed-examples/).
 In this workshop, we will use the [Kali Linux Full Unattended](https://gitlab.com/kalilinux/recipes/kali-preseed-examples/-/raw/master/kali-linux-full-unattended.preseed). The first comment in this file mentions that "This preseed files will install a Kali Linux "Full" installation with no questions asked (unattended)", this sounds great but to have a complete installation we will have to modify some lines. I will not go deeper into the syntax of preseed scripts but for more information, you can reference this link [Automating the installation using preseeding](https://www.debian.org/releases/bookworm/amd64/apb.en.html).
 
 ```bash
 kali@pentester:~/live-build-config$ wget https://gitlab.com/kalilinux/recipes/kali-preseed-examples/-/raw/master/kali-linux-full-unattended.preseed -O kali-config/includes.installer/preseed.cfg
 ```
-Don't forget that this is your custom Kali Linux image so of course there are some fills in the automation process you would like to control/modify such as language, username, password, etc for this you need to edit some entries in the preseed.cfg script you just downloaded above. Some basic modification can be done using the bash script below.
+Don't forget that this is your custom Kali Linux image so of course there are some fills in the automation process you would like to control/modify such as language, username, password, etc for this you need to edit some entries in the preseed.cfg script you just downloaded above. Some basic modifications can be done using the bash script below.
 
 ```bash
 #filename = customize.sh
-#/bin/bash
+#!/bin/bash
 
 #Storing the path of the preseed.cfg file in a variable to facilitate manipulation
-$filepath = "~/live-build-config/kali-config/includes.installer/preseed.cfg"
+$filepath = "~/live-build-config/kali-config/common/includes.installer/preseed.cfg"
 
 # Changing our location from US to Britain an changing the language to English
 sed -i  's/d-i debian-installer\/locale string en_US/d-i debian-installer\/locale string en_GB\nd-i debian-installer\/language string en/' $filepath
@@ -104,29 +106,33 @@ sed -i  '47a/d-i passwd\/root-login boolean false/' $filepath
 sed -i  's/#d-i passwd\/root-password password toor/d-i passwd\/root-password password toor/' $filepath
 sed -i  's/#d-i passwd\/root-password-again password toor/d-i passwd\/root-password-again password toor/' $filepath
 
-
-#There are many more to customize. Remember this is your Kali ISO so try to play around with this file. 
+#There are many more to customize. 
 ```
 ```bash
 kali@pentester:~/live-build-config$ chmod 755 ./customize.sh
 kali@pentester:~/live-build-config$ ./customize.sh
 ```
 
+#### Step 2: Enhancing Kali Linux ISO with Custom Scripts
+Integrating custom scripts into your Kali Linux ISO is an excellent strategy to streamline your workflow. By embedding these scripts directly into the ISO, they become readily available immediately after installation, eliminating the need to download or configure them each time you set up Kali. This approach not only saves time but also ensures that your environment is consistently tailored to your specific needs right from the start. These scripts or any other file can be added to the **live-build-config/kali-config/common/includes.chroot** directory. Let's store the Firefox password extractor script in this directory and change the custom Kali wallpaper
 
+```bash
+kali@pentester:~/live-build-config$ mkdir kali-config/common/includes.chroot/opt
+kali@pentester:~/live-build-config$ wget https://raw.githubusercontent.com/unode/firefox_decrypt/main/firefox_decrypt.py -O kali-config/common/includes.chroot/opt/firefox_decrypt.py
 
+kali@pentester:~/live-build-config$  # Replacing Kali default wallpaper
+kali@pentester:~/live-build-config$ mkdir -p kali-config/common/includes.chroot/usr/share/wallpapers/kali/contents/images
+kali@pentester:~/live-build-config$ wget https://www.example.com/sample-image.png
+kali@pentester:~/live-build-config$ mv sample-image.png kali-config/common/includes.chroot/usr/share/wallpapers/kali/contents/images/wp-blue.png
+```
 
+#### Step 3: Customizing Your Build Process with Bash Scripts
+We can now create hook scripts that will run at various stages of the build. Here we will create a hook script that will install additional python3 packages during the creation of the Kali Linux ISO file. For more information about hooks and how they can be used check this link [Hooks](https://live-team.pages.debian.net/live-manual/html/live-manual/customizing-contents.en.html#507)
 
-
-
-
-
-
-
-
-
-
-
-
+```bash
+kali@pentester:~/live-build-config$ echo "#!/bin/bash" > kali-config/hooks/live/99-install-python-packages.hook.chroot 
+kali@pentester:~/live-build-config$ echo "pip3 install uploadserver" >> kali-config/common/hooks/live/99-install-python-packages.hook.chroot 
+kali@pentester:~/live-build-config$ chmod 755 kali-config/common/hooks/live/99-install-python-packages.hook.chroot 
 
 
 
