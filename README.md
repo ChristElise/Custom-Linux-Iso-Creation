@@ -103,8 +103,8 @@ sed -i '44a\d-i passwd\/user-fullname string pentester' $filepath
 sed -i '45a\d-i passwd\/username string pentester' $filepath
 sed -i "46a\d-i passwd\/user-password-crypted password $(mkpasswd -m sha-512 pentester)" $filepath
 sed -i  '47a/d-i passwd\/root-login boolean false/' $filepath
-sed -i  's/#d-i passwd\/root-password password toor/d-i passwd\/root-password password toor/' $filepath
-sed -i  's/#d-i passwd\/root-password-again password toor/d-i passwd\/root-password-again password toor/' $filepath
+sed -i  's/d-i passwd\/root-password password toor/#d-i passwd\/root-password password toor/' $filepath
+sed -i  's/d-i passwd\/root-password-again password toor/#d-i passwd\/root-password-again password toor/' $filepath
 
 #There are many more to customize. 
 ```
