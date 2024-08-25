@@ -46,6 +46,7 @@ kali@pentester:~/live-build-config/kali-config/common$ ls
 bootloaders  hooks  includes.binary  includes.chroot  includes.installer  package-lists  preseed
 ```
 These folders contain different scripts used in the building process of the Kali Linux image. For this workshop, we will touch the **hooks**, **includes.chroot**, and **includes.installer** folders. These folders have the following functions.<br>
+
 • **hooks**: This folder contains bash script hooks. Bash hook scripts are special scripts that are executed at a predefined point in a process to customize or extend its behavior. Here the will be executed at specific points during the build process. These hooks allow you to customize and extend the build process according to your requirements.<br>
 • **includes.chroot**: This folder represents the overlaying of files in the Linux root directory (/). Custom files we may want to integrate with our Kali Linux ISO can be placed here.<br>
 • **includes.installer**: This folder is used to configure automated installations using preseeding. Preseeding is a method used in Debian-based systems (including Kali Linux) to automate the installation process by pre-configuring the installer with answers to the prompts normally asked during installation.<br>
