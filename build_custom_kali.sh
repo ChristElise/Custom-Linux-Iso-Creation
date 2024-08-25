@@ -19,7 +19,7 @@ EOF
 # Making it executable
 chmod 755 kali-config/common/includes.binary/isolinux/install.cfg
 
-#### Customize the unattended download option ####
+#### Customise the unattended download option ####
 filepath="./kali-config/common/includes.installer/preseed.cfg"
 wget https://gitlab.com/kalilinux/recipes/kali-preseed-examples/-/raw/master/kali-linux-full-unattended.preseed -O $filepath
 # Changing Location, Language, Country, and Timezone respectively
@@ -53,7 +53,7 @@ EOF
 
 chmod 755 kali-config/common/hooks/live/99-install-python-packages.hook.chroot 
 
-### Customize default tools ###
+### Customise default tools ###
 cat <<EOF >> kali-config/variant-light/package-lists/kali.list.chroot
 metasploit-framework
 
