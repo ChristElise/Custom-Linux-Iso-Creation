@@ -1,6 +1,6 @@
 # **Custom Kali Linux ISO Creation**
 
-This repository explains everything that a beginner hacker needs to know to build a custom Kali Linux ISO with his/her desired tools incorporated in the ISO file. Doing so increases efficiency because during every Kali Linux install all your desired tools will be integrated and there is no need to "apt-get install " anymore. Enjoy the post and have fun and don't forget to continue hacking
+This repository explains everything that a beginner hacker needs to know to build a custom Kali Linux ISO with his/her desired tools incorporated in the ISO file. Doing so increases efficiency because during every Kali Linux install all your desired tools will be integrated and there is no need to "apt-get install " anymore. Enjoy the post and have fun and don't forget to continue hacking.
 
 ---
 
@@ -16,7 +16,7 @@ We now need to download the GitLab repository which contains all the necessary f
 ```bash
 kali@pentester:~$ git clone https://gitlab.com/kalilinux/build-scripts/live-build-config.git
 ```
-After downloading the repository we can then move into it and list its contents
+After downloading the repository we can then move into it and list its contents.
 ```bash
 kali@pentester:~$ cd live-build-config 
 kali@pentester:~/live-build-config$ ls
@@ -58,10 +58,10 @@ variant-light
 └── package-lists
     └── kali.list.chroot
 ```
-As we can see we have a **package-list** folder which contains the **kali.list.chroot** file. This file contains packages that are installed by default in the Kali Linux ISO and can be modified to include any tool that can be installed with ***apt install \<package name\>***
+As we can see we have a **package-list** folder which contains the **kali.list.chroot** file. This file contains packages that are installed by default in the Kali Linux ISO and can be modified to include any tool that can be installed with ***apt install \<package name\>***.
 
 ### 3. Getting Our Hands Dirty :yum:
-We have talked a lot of theory now it's time to use our understanding to create our custom Kali Linux Image which will be ready to use out of the box for the intended purpose. This will be broken down into various steps. *NB: These steps are followed after installing dependencies and cloning the **live-build-config** from GitLab*
+We have talked a lot of theory now it's time to use our understanding to create our custom Kali Linux Image which will be ready to use out of the box for the intended purpose. This will be broken down into various steps. *NB: These steps are followed after installing dependencies and cloning the **live-build-config** from GitLab*.
 
 #### Step 1: Make Kali Install on its own
 Tired of playing the endless game of "Enter, Yes, Enter, Enter, Yes" every time you install Kali Linux? Or maybe you'd rather kick off the installation and hit the sack, instead of risking a caffeine-fueled disaster by turning your keyboard into a coffee sponge while you mash the Enter key like it's your job? Well, here we will study how to automate your installation process using preseeding scripts for unattended installation that does all the hard work for you.
@@ -115,7 +115,7 @@ kali@pentester:~/live-build-config$ ./customise.sh
 ```
 
 #### Step 2: Enhancing Kali Linux ISO with Custom Scripts
-Integrating custom scripts into your Kali Linux ISO is an excellent strategy to streamline your workflow. By embedding these scripts directly into the ISO, they become readily available immediately after installation, eliminating the need to download or configure them each time you set up Kali. This approach saves time and ensures that your environment is consistently tailored to your specific needs right from the start. These scripts or any other file can be added to the **live-build-config/kali-config/common/includes.chroot** directory. Let's store the Firefox password extractor script in this directory and change the custom Kali wallpaper
+Integrating custom scripts into your Kali Linux ISO is an excellent strategy to streamline your workflow. By embedding these scripts directly into the ISO, they become readily available immediately after installation, eliminating the need to download or configure them each time you set up Kali. This approach saves time and ensures that your environment is consistently tailored to your specific needs right from the start. These scripts or any other file can be added to the **live-build-config/kali-config/common/includes.chroot** directory. Let's store the Firefox password extractor script in this directory and change the custom Kali wallpaper.
 
 ```bash
 kali@pentester:~/live-build-config$ mkdir kali-config/common/includes.chroot/opt
@@ -128,7 +128,7 @@ kali@pentester:~/live-build-config$ mv sample-image.png kali-config/common/inclu
 ```
 
 #### Step 3: Customizing Kali Build Process with Bash Scripts
-We can now create hook scripts that will run at various stages of the build. Here we will create a hook script that will install additional python3 packages during the creation of the Kali Linux ISO file. For more information about hooks and how they can be used check this link [Hooks](https://live-team.pages.debian.net/live-manual/html/live-manual/customizing-contents.en.html#507)
+We can now create hook scripts that will run at various stages of the build. Here we will create a hook script that will install additional python3 packages during the creation of the Kali Linux ISO file. For more information about hooks and how they can be used check this link [Hooks](https://live-team.pages.debian.net/live-manual/html/live-manual/customizing-contents.en.html#507).
 
 ```bash
 kali@pentester:~/live-build-config$ echo '#!/bin/bash' > kali-config/common/hooks/live/99-install-python-packages.hook.chroot 
@@ -136,14 +136,14 @@ kali@pentester:~/live-build-config$ echo "pip3 install uploadserver" >> kali-con
 kali@pentester:~/live-build-config$ chmod 755 kali-config/common/hooks/live/99-install-python-packages.hook.chroot 
 ```
 #### Step 4: Customizing Installed Packages
-We are almost done with the process. What's is remaining is to edit the **kali.list.chroot** in any of the available variants and add all the packages (such as Nmap, Metasploit, Crackmapexec, etc ) we want in our default custom installation. Thanks to Kali's structure we will not have to write every package one by one since Kali Linux offers us metapackages which are combinations of different packages. A list of all available metapackages and their component can be found here [kali-meta](https://www.kali.org/tools/kali-meta/)
+We are almost done with the process. What's is remaining is to edit the **kali.list.chroot** in any of the available variants and add all the packages (such as Nmap, Metasploit, Crackmapexec, etc ) we want in our default custom installation. Thanks to Kali's structure we will not have to write every package one by one since Kali Linux offers us metapackages which are combinations of different packages. A list of all available metapackages and their component can be found here [kali-meta](https://www.kali.org/tools/kali-meta/).
 
 ```bash
 kali@pentester:~/live-build-config$ echo "kali-linux-default\nkali-tools-top10\npowershell\npython3\n" >>   kali-config/variant-light/package-lists/kali.list.chroot
 ```
 
 #### Step 4: Building our Kali ISO Image
-After customizing our desired build to fit our taste we can now run the **build.sh** script found in the **live-build-config** directory providing arguments for it to build an ISO image for the Kali built we have customised in our case **kali-config/variant-light**
+After customizing our desired build to fit our taste we can now run the **build.sh** script found in the **live-build-config** directory providing arguments for it to build an ISO image for the Kali built we have customised in our case **kali-config/variant-light**.
 
 ```bash
 kali@pentester:~/live-build-config$ ./build.sh --variant light --verbose --arch amd64  --distribution kali-rolling
