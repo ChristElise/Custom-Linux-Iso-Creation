@@ -166,7 +166,7 @@ kali@pentester:~/live-build-config$ ls images
 kali-linux-rolling-live-light-amd64.log   kali-linux-rolling-live-light-amd64.iso
 ```
 #### Step 5: Install Your Custom Kali 
-The last step for you is to install your custom Kali Linux ISO and start playing some HackTheBox or TryHackMe boxes
+A script to automate all this process can be accessed using the link [Build Custom Kali](https://github.com/ChristElise/Custom-Linux-Iso-Creation/blob/main/build_custom_kali.sh), feel free to modify the script so that it can fit your specific need. The last step is installing your custom Kali Linux ISO and testing it by playing HackTheBox or TryHackMe boxes.
 
 
 
