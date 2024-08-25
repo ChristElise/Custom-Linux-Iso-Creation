@@ -1,4 +1,4 @@
-# **Custom Kali Linux ISO Creation**
+# **Custom Kali Linux Image ISO Creation**
 
 This repository explains everything that a beginner hacker needs to know to build a custom Kali Linux ISO with his/her desired tools incorporated in the ISO file. Doing so increases efficiency because during every Kali Linux install all your desired tools will be integrated and there is no need to "apt-get install " anymore. Enjoy the post and have fun and don't forget to continue hacking.
 
