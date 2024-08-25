@@ -84,37 +84,37 @@ kali@pentester:~/live-build-config$ wget https://gitlab.com/kalilinux/recipes/ka
 Don't forget that this is your custom Kali Linux image so of course there are some fills in the automation process you would like to control/modify such as language, username, password, etc for this you need to edit some entries in the preseed.cfg script you just downloaded above. Some basic modifications can be done using the bash script below.
 
 ```bash
-#filename = customize.sh
+#filename = customise.sh
 #!/bin/bash
 
 #Storing the path of the preseed.cfg file in a variable to facilitate manipulation
 filepath="./kali-config/common/includes.installer/preseed.cfg"
+wget https://gitlab.com/kalilinux/recipes/kali-preseed-examples/-/raw/master/kali-linux-full-unattended.preseed -O $filepath
 
-# Changing our location from US to Britain an changing the language to English
-sed -i  's/d-i debian-installer\/locale string en_US/d-i debian-installer\/locale string en_GB\nd-i debian-installer\/language string en/' $filepath
-# Changing country to British
-sed -i  's/d-i mirror\/country string enter information manually/d-i mirror\/country string GB/' $filepath
-#Changing time zone
-sed -i  's/d-i time\/zone string US\/Eastern/d-i time\/zone string Europe\/London/' $filepath
-#Chaning host information
-sed -i  's/d-i netcfg\/get_hostname string unassigned-hostname/d-i netcfg\/get_domain string kali.local/' $filepath
-sed -i  's/d-i passwd\/make-user boolean false/d-i passwd\/make-user boolean true/' $filepath
-sed -i '44a\d-i passwd\/user-fullname string pentester' $filepath
-sed -i '45a\d-i passwd\/username string pentester' $filepath
-sed -i "46a\d-i passwd\/user-password-crypted password $(mkpasswd -m sha-512 pentester)" $filepath
-sed -i  '47a/d-i passwd\/root-login boolean false/' $filepath
+# Changing Location, Language, Country, and Timezone respectively
+sed -i  '3s/en_US/en_GB/' $filepath
+sed -i  '3a\d-i debian-installer\/language string en' $filepath
+sed -i  '6s/enter information manually/GB/' $filepath
+sed -i  '13s/US\/Eastern/Europe\/London/' $filepath 
+#Changing Host information
+sed -i  '42s/unassigned-hostname/kali.local/' $filepath
+sed -i  '45s/false/true/' $filepath
+sed -i  '45a\d-i passwd\/user-fullname string pentester' $filepath
+sed -i  '46a\d-i passwd\/username string pentester' $filepath
+sed -i  "47a\d-i passwd\/user-password-crypted password $(mkpasswd -m sha-512 pentester)" $filepath
+sed -i  '48a\d-i passwd\/root-login boolean false' $filepath
 sed -i  's/d-i passwd\/root-password password toor/#d-i passwd\/root-password password toor/' $filepath
 sed -i  's/d-i passwd\/root-password-again password toor/#d-i passwd\/root-password-again password toor/' $filepath
 
-#There are many more to customize. 
+#There are many more to customise. 
 ```
 ```bash
-kali@pentester:~/live-build-config$ chmod 755 ./customize.sh
-kali@pentester:~/live-build-config$ ./customize.sh
+kali@pentester:~/live-build-config$ chmod 755 ./customise.sh
+kali@pentester:~/live-build-config$ ./customise.sh
 ```
 
 #### Step 2: Enhancing Kali Linux ISO with Custom Scripts
-Integrating custom scripts into your Kali Linux ISO is an excellent strategy to streamline your workflow. By embedding these scripts directly into the ISO, they become readily available immediately after installation, eliminating the need to download or configure them each time you set up Kali. This approach not only saves time but also ensures that your environment is consistently tailored to your specific needs right from the start. These scripts or any other file can be added to the **live-build-config/kali-config/common/includes.chroot** directory. Let's store the Firefox password extractor script in this directory and change the custom Kali wallpaper
+Integrating custom scripts into your Kali Linux ISO is an excellent strategy to streamline your workflow. By embedding these scripts directly into the ISO, they become readily available immediately after installation, eliminating the need to download or configure them each time you set up Kali. This approach saves time and ensures that your environment is consistently tailored to your specific needs right from the start. These scripts or any other file can be added to the **live-build-config/kali-config/common/includes.chroot** directory. Let's store the Firefox password extractor script in this directory and change the custom Kali wallpaper
 
 ```bash
 kali@pentester:~/live-build-config$ mkdir kali-config/common/includes.chroot/opt
@@ -142,7 +142,7 @@ kali@pentester:~/live-build-config$ echo "kali-linux-default\nkali-tools-top10\n
 ```
 
 #### Step 4: Building our Kali ISO Image
-After customizing our desired build to fit our taste we can now run the **build.sh** script found in the **live-build-config** directory providing arguments for it to build an ISO image for the Kali built we have customized in our case **kali-config/variant-light**
+After customizing our desired build to fit our taste we can now run the **build.sh** script found in the **live-build-config** directory providing arguments for it to build an ISO image for the Kali built we have customised in our case **kali-config/variant-light**
 
 ```bash
 kali@pentester:~/live-build-config$ ./build.sh --variant light --verbose --arch amd64  --distribution kali-rolling
