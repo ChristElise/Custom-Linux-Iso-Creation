@@ -47,7 +47,7 @@ cat <<EOF > kali-config/common/hooks/live/99-install-python-packages.hook.chroot
 #!/bin/bash
 
 pip3 install uploadserver
-pip3 install <package name>
+
 
 EOF
 
@@ -55,6 +55,8 @@ chmod 755 kali-config/common/hooks/live/99-install-python-packages.hook.chroot
 
 ### Customise default tools ###
 cat <<EOF >> kali-config/variant-light/package-lists/kali.list.chroot
+python3
+python3-pip
 metasploit-framework
 
 EOF
