@@ -139,7 +139,7 @@ kali@pentester:~/live-build-config$ chmod 755 kali-config/common/hooks/live/99-i
 We are almost done with the process. What's is remaining is to edit the **kali.list.chroot** in any of the available variants and add all the packages (such as Nmap, Metasploit, Crackmapexec, etc ) we want in our default custom installation. Thanks to Kali's structure we will not have to write every package one by one since Kali Linux offers us metapackages which are combinations of different packages. A list of all available metapackages and their component can be found here [kali-meta](https://www.kali.org/tools/kali-meta/).
 
 ```bash
-kali@pentester:~/live-build-config$ echo "kali-linux-default\nkali-tools-top10\npowershell\npython3\n" >>   kali-config/variant-light/package-lists/kali.list.chroot
+kali@pentester:~/live-build-config$ echo "kali-linux-default\nkali-tools-top10\npowershell\npython3\npython3-pip" >>   kali-config/variant-light/package-lists/kali.list.chroot
 ```
 
 #### Step 4: Building our Kali ISO Image
